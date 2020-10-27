@@ -4,12 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import android.util.Log;
+
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = "dkhai";
     // Used to load the 'native-lib' library on application startup.
+    private static boolean loaded;
     static {
-        System.loadLibrary("native-lib");
+        try {
+            System.loadLibrary("native_dkhai");
+            loaded = true;
+            Log.v(TAG, "successfully loaded native_dkhai");
+        } catch (UnsatisfiedLinkError e) {
+            Log.e(TAG, "failed to load native_dkhai");
+            loaded = false;
+        }
     }
 
     @Override
